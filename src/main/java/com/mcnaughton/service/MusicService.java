@@ -33,7 +33,7 @@ public class MusicService {
         }
     }
 
-    public Playlist getPlaylist(){
+    public Playlist getPlaylist() throws Exception {
         return spotifyClient.getPlaylistTracks();
     }
 }

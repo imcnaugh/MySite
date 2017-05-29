@@ -63,7 +63,12 @@ public class SpotifyClient {
         expireDate = DateTime.now().plusSeconds(response.getExpires_in());
     }
 
-    public Playlist getPlaylistTracks(){
+    public Playlist getPlaylistTracks() throws Exception {
+        if(expireDate == null){
+            //TODO get better errors
+            throw new Exception();
+        }
+
         if(expireDate.isBeforeNow()){
             refreshAccessToken();
         }

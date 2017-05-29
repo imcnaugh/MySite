@@ -16,7 +16,7 @@ public class MusicController {
     private MusicService musicService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Playlist testing() throws TwitterException {
+    public Playlist testing() throws Exception {
         return musicService.getPlaylist();
     }
 }
