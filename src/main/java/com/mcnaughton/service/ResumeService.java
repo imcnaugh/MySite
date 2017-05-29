@@ -76,7 +76,7 @@ public class ResumeService {
         job.setEndDate(YearMonth.of(2014, 5));
         Set<String> highlights = new HashSet<>();
         highlights.add("Collaborated closely with developers, and product owners/clients to design" +
-                " client-centered application");
+                " client-centered application.properties");
         highlights.add("Developed and maintained code for a legacy system");
         highlights.add("Trained new team members");
         highlights.add("Documented existing legacy projects, and new development work");
@@ -98,7 +98,7 @@ public class ResumeService {
         Set<String> highlights = new HashSet<>();
         highlights.add("Organized, lead, and implemented changes to help remove more than 100 redundant/unused fields" +
                 " in a data model bringing things to a simple, manageable state.");
-        highlights.add("Replaced a PHP application and its Node.js wrapper with a much simpler Scala service");
+        highlights.add("Replaced a PHP application.properties and its Node.js wrapper with a much simpler Scala service");
         highlights.add("Learned new technologies, and systems quickly to create production ready code within weeks");
         job.setHighlights(highlights);
         return job;

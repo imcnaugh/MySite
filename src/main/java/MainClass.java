@@ -1,3 +1,5 @@
+import com.mcnaughton.client.spotifyModels.SpotifyClientConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +12,9 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 
 import java.util.Arrays;
 
@@ -17,6 +22,15 @@ import java.util.Arrays;
 @EnableSwagger2
 @ComponentScan("com.mcnaughton")
 public class MainClass {
+
+    @Value("${twitter.consumerKey}")
+    private String consumerKey;
+    @Value("${twitter.consumerSec}")
+    private String consumerSec;
+    @Value("${twitter.applicationKey}")
+    private String applicationKey;
+    @Value("${twitter.applicationSec}")
+    private String applicationSec;
 
     public static void main(String[] args){
         SpringApplication.run(MainClass.class, args);
@@ -45,5 +59,25 @@ public class MainClass {
                 .build()
                 .pathMapping("/")
                 .apiInfo(apiInfo);
+    }
+
+    @Bean
+    public ConfigurationBuilder getConfigurationBuilder(){
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setOAuthConsumerKey(consumerKey);
+        cb.setOAuthConsumerSecret(consumerSec);
+        cb.setOAuthAccessToken(applicationKey);
+        cb.setOAuthAccessTokenSecret(applicationSec);
+        return cb;
+    }
+
+    @Bean
+    public Twitter getTwitterClient(ConfigurationBuilder cb){
+        return new TwitterFactory(cb.build()).getInstance();
+    }
+
+    @Bean
+    public SpotifyClientConfig getSpotifyClientConfigs(){
+        return new SpotifyClientConfig();
     }
 }
