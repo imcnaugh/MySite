@@ -16,7 +16,7 @@ public class SpotifyClientConfig {
     @Value("${spotify.requestAccessPath}")
     private String requestAccessPath;
 
-    @Value("${spotify.redirectUr}")
+    @Value("${spotify.redirectUri}")
     private String redirectUri;
 
     @Value("${spotify.clientId}")
