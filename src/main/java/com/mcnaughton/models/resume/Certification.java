@@ -1,5 +1,7 @@
 package com.mcnaughton.models.resume;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.Year;
 
 public class Certification {
@@ -23,6 +25,7 @@ public class Certification {
         this.issuer = issuer;
     }
 
+    @JsonFormat(pattern="yyyy")
     public Year getYearEarned() {
         return yearEarned;
     }

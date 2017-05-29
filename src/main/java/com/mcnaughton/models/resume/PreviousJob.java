@@ -1,5 +1,7 @@
 package com.mcnaughton.models.resume;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.YearMonth;
 import java.util.Set;
 
@@ -40,6 +42,7 @@ public class PreviousJob {
         this.locations = locations;
     }
 
+    @JsonFormat(pattern="yyyy-MM")
     public YearMonth getStartDate() {
         return startDate;
     }
@@ -48,6 +51,7 @@ public class PreviousJob {
         this.startDate = startDate;
     }
 
+    @JsonFormat(pattern="yyyy-MM")
     public YearMonth getEndDate() {
         return endDate;
     }

@@ -1,6 +1,8 @@
 package com.mcnaughton.models.resume;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.Year;
 
 public class Degree {
@@ -33,6 +35,7 @@ public class Degree {
         this.location = location;
     }
 
+    @JsonFormat(pattern="yyyy")
     public Year getYearEarned() {
         return yearEarned;
     }
