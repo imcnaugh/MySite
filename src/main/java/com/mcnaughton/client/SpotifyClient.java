@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
@@ -32,13 +33,16 @@ public class SpotifyClient {
         headers.add("Authorization", "Basic " + getEncodedClientInfo());
         HttpEntity<String> entity = new HttpEntity<String>(null,headers);
 
+        String url = UriUtil.generateUri(config.getAuthHost(), config.getRequestAccessPath(),
+                "grant_type=authorization_code",
+                "code=" + authToken,
+                "redirect_uri=" + config.getRedirectUri());
+
         AccessResponse response = template.postForObject(
-                UriUtil.generateUri(config.getAuthHost(), config.getRequestAccessPath(),
-                        "grant_type=authorization_code",
-                        "code=" + authToken,
-                        "redirect_uri=" + config.getRedirectUri()),
+                url,
                 entity,
                 AccessResponse.class);
+
         setTokens(response);
     }
 
@@ -72,15 +76,18 @@ public class SpotifyClient {
         if(expireDate.isBeforeNow()){
             refreshAccessToken();
         }
-        String url = UriUtil.generateUri(config.getApiHost(),
+        String url = UriUtil.generateUri(
+                config.getApiHost(),
                 config.getApiBasePath() + config.getUserId() + "/playlists/" + config.getPlaylistId() + "/tracks",
                 "fields=total,items(track(name,href,album(name,href)))");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", tokenType + " " + accessToken);
+        headers.add(HttpHeaders.ACCEPT, "application/json");
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
+        headers.add("Authorization", "Bearer" + " " + accessToken);
         HttpEntity<String> entity = new HttpEntity<>(null,headers);
 
-        ResponseEntity<Playlist> response = template.getForEntity(url, Playlist.class, entity);
+        ResponseEntity<Playlist> response = template.exchange(url, HttpMethod.GET, entity, Playlist.class);
 
         return response.getBody();
     }

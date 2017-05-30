@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class SpotifyClientConfig {
 
-    @Value("${spotify.api.host}")
+    @Value("${spotify.auth.host}")
     private String authHost;
 
     @Value("${spotify.api.host}")
