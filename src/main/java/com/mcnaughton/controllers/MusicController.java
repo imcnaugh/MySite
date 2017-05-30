@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import twitter4j.TwitterException;
 
@@ -18,7 +19,12 @@ public class MusicController {
     private MusicService musicService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Playlist testing() throws Exception {
+    public Playlist getPlaylist() throws Exception {
         return musicService.getPlaylist();
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public void addSongToPlaylist(@RequestParam String spotifyUri) throws Exception {
+        musicService.addSongToPlaylist(spotifyUri);
     }
 }

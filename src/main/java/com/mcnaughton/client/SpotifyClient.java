@@ -12,6 +12,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
+import sun.net.util.URLUtil;
 
 import java.util.Base64;
 
@@ -84,12 +85,35 @@ public class SpotifyClient {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.ACCEPT, "application/json");
         headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
-        headers.add("Authorization", "Bearer" + " " + accessToken);
+        headers.add("Authorization", tokenType + " " + accessToken);
         HttpEntity<String> entity = new HttpEntity<>(null,headers);
 
         ResponseEntity<Playlist> response = template.exchange(url, HttpMethod.GET, entity, Playlist.class);
 
         return response.getBody();
+    }
+
+    public void addSongToPlaylist(String songUri) throws Exception {
+        if(expireDate == null){
+            //TODO get better errors
+            throw new Exception();
+        }
+
+        if(expireDate.isBeforeNow()){
+            refreshAccessToken();
+        }
+
+        String url = UriUtil.generateUri(
+                config.getApiHost(),
+                config.getApiBasePath() + config.getUserId() + "/playlists/" + config.getPlaylistId() + "/tracks",
+                "uris=" + songUri);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
+        headers.add("Authorization", tokenType + " " + accessToken);
+        HttpEntity<String> entity = new HttpEntity<>(null,headers);
+
+        template.postForEntity(url, entity, null);
     }
 
     private String getEncodedClientInfo() {

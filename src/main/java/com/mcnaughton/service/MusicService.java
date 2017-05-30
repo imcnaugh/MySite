@@ -37,4 +37,8 @@ public class MusicService {
     public Playlist getPlaylist() throws Exception {
         return spotifyClient.getPlaylistTracks();
     }
+
+    public void addSongToPlaylist(String songUri) throws Exception {
+        spotifyClient.addSongToPlaylist(songUri);
+    }
 }
