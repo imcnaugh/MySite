@@ -38,7 +38,7 @@ public class MusicController {
     @ApiOperation(value = "Adds a new song to the playlist")
     @RequestMapping(method = RequestMethod.POST)
     public void addSongToPlaylist(
-            @ApiParam(value = "the spotify uri of the song", required = true, name = "spotify uri", defaultValue = "spotify:track:6SmPPtaMnfxgz5duA6t9Cu")
+            @ApiParam(value = "the spotify uri of the song", required = true, defaultValue = "spotify:track:6SmPPtaMnfxgz5duA6t9Cu")
             @RequestParam String spotifyUri) throws Exception {
         musicService.addSongToPlaylist(spotifyUri);
     }
