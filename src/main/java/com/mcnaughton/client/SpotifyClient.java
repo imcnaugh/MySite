@@ -21,12 +21,12 @@ public class SpotifyClient {
     @Autowired
     private SpotifyClientConfig config;
 
-    private RestTemplate template = new RestTemplate();
+    private static RestTemplate template = new RestTemplate();
 
-    private String accessToken;
-    private String refreshToken;
-    private String tokenType;
-    private DateTime expireDate;
+    private static String accessToken;
+    private static String refreshToken;
+    private static String tokenType;
+    private static DateTime expireDate;
 
     public void requestAccessToken(String authToken){
         HttpHeaders headers = new HttpHeaders();
@@ -108,11 +108,10 @@ public class SpotifyClient {
                 "uris=" + songUri);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
-        headers.add("Authorization", tokenType + " " + accessToken);
-        HttpEntity<String> entity = new HttpEntity<>(null,headers);
+        headers.add("Authorization", (tokenType + " " + accessToken));
+        HttpEntity<String> entity = new HttpEntity<String>(null,headers);
 
-        template.exchange(url,HttpMethod.POST, entity, Object.class);
+        template.postForObject(url, entity, Object.class);
     }
 
     private String getEncodedClientInfo() {
