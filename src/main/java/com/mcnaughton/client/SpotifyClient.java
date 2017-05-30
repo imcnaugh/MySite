@@ -84,7 +84,7 @@ public class SpotifyClient {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.ACCEPT, "application/json");
         headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
-        headers.add("Authorization", "Bearer " + accessToken);
+        headers.add("Authorization", tokenType + " " + accessToken);
         HttpEntity<String> entity = new HttpEntity<>(null,headers);
 
         ResponseEntity<Playlist> response = template.exchange(url, HttpMethod.GET, entity, Playlist.class);
@@ -109,10 +109,10 @@ public class SpotifyClient {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
-        headers.add("Authorization", "Bearer " + accessToken);
+        headers.add("Authorization", tokenType + " " + accessToken);
         HttpEntity<String> entity = new HttpEntity<>(null,headers);
 
-        template.postForObject(url, entity, Object.class);
+        template.postForEntity(url, entity, Object.class);
     }
 
     private String getEncodedClientInfo() {
