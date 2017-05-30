@@ -79,7 +79,7 @@ public class SpotifyClient {
         String url = UriUtil.generateUri(
                 config.getApiHost(),
                 config.getApiBasePath() + config.getUserId() + "/playlists/" + config.getPlaylistId() + "/tracks",
-                "fields=total,items(track(name,href,album(name,href)))");
+                "fields=total,items(track(id,name,album(name),artists(name)))");
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.ACCEPT, "application/json");

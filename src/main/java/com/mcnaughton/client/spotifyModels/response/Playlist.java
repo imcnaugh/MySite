@@ -36,9 +36,18 @@ class Item{
 }
 
 class Track{
+    private String id;
     private String name;
-    private String herf;
     private Album album;
+    private Set<Artist> artists;
+
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -46,14 +55,6 @@ class Track{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getHerf() {
-        return herf;
-    }
-
-    public void setHerf(String herf) {
-        this.herf = herf;
     }
 
     public Album getAlbum() {
@@ -63,11 +64,19 @@ class Track{
     public void setAlbum(Album album) {
         this.album = album;
     }
+
+    public Set<Artist> getArtists(){
+        return artists;
+    }
+
+    public void setArtists(Set<Artist> artists){
+        this.artists = artists;
+    }
 }
 
-class Album{
+class Artist{
+
     private String name;
-    private String herf;
 
     public String getName() {
         return name;
@@ -76,12 +85,16 @@ class Album{
     public void setName(String name) {
         this.name = name;
     }
+}
 
-    public String getHerf() {
-        return herf;
+class Album{
+    private String name;
+
+    public String getName() {
+        return name;
     }
 
-    public void setHerf(String herf) {
-        this.herf = herf;
+    public void setName(String name) {
+        this.name = name;
     }
 }

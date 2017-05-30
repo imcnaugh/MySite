@@ -39,6 +39,11 @@ public class MusicService {
     }
 
     public void addSongToPlaylist(String songUri) throws Exception {
-        spotifyClient.addSongToPlaylist(songUri);
+        boolean acceptingNewSongs = twitterClient.acceptingNewSongs();
+        if(acceptingNewSongs){
+            spotifyClient.addSongToPlaylist(songUri);
+        } else {
+            throw new Exception("not takaing any new songs at this time");
+        }
     }
 }
