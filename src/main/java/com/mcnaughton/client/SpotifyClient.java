@@ -113,7 +113,7 @@ public class SpotifyClient {
         headers.add("Authorization", tokenType + " " + accessToken);
         HttpEntity<String> entity = new HttpEntity<>(null,headers);
 
-        template.postForObject(url, entity, null);
+        template.postForObject(url, entity, Object.class);
     }
 
     private String getEncodedClientInfo() {
