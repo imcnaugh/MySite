@@ -3,6 +3,7 @@ package com.mcnaughton.client;
 import com.mcnaughton.client.spotifyModels.AccessResponse;
 import com.mcnaughton.client.spotifyModels.SpotifyClientConfig;
 import com.mcnaughton.client.spotifyModels.response.Playlist;
+import com.mcnaughton.exceptions.NotLoggedIntoSpotifyException;
 import com.mcnaughton.util.UriUtil;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +33,14 @@ public class SpotifyClient {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Basic " + getEncodedClientInfo());
         HttpEntity<String> entity = new HttpEntity<String>(null,headers);
-
         String url = UriUtil.generateUri(config.getAuthHost(), config.getRequestAccessPath(),
                 "grant_type=authorization_code",
                 "code=" + authToken,
                 "redirect_uri=" + config.getRedirectUri());
-
         AccessResponse response = template.postForObject(
                 url,
                 entity,
                 AccessResponse.class);
-
         setTokens(response);
     }
 
@@ -50,27 +48,19 @@ public class SpotifyClient {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Basic " + getEncodedClientInfo());
         HttpEntity<String> entity = new HttpEntity<String>(null,headers);
-
+        String url = UriUtil.generateUri(config.getAuthHost(), config.getRequestAccessPath(),
+                "grant_type=refresh_token",
+                "refresh_token=" + refreshToken);
         AccessResponse response = template.postForObject(
-                UriUtil.generateUri(config.getAuthHost(), config.getRequestAccessPath(),
-                        "grant_type=refresh_token",
-                        "code=" + refreshToken),
+                url,
                 entity,
                 AccessResponse.class);
         setTokens(response);
     }
 
-    private void setTokens(AccessResponse response) {
-        accessToken = response.getAccess_token();
-        refreshToken = response.getRefresh_token();
-        tokenType = response.getToken_type();
-        expireDate = DateTime.now().plusSeconds(response.getExpires_in());
-    }
-
-    public Playlist getPlaylistTracks() throws Exception {
+    public Playlist getPlaylistTracks() throws NotLoggedIntoSpotifyException {
         if(expireDate == null){
-            //TODO get better errors
-            throw new Exception();
+            throw new NotLoggedIntoSpotifyException();
         }
 
         if(expireDate.isBeforeNow()){
@@ -92,10 +82,9 @@ public class SpotifyClient {
         return response.getBody();
     }
 
-    public void addSongToPlaylist(String songUri) throws Exception {
+    public void addSongToPlaylist(String songUri) throws NotLoggedIntoSpotifyException {
         if(expireDate == null){
-            //TODO get better errors
-            throw new Exception();
+            throw new NotLoggedIntoSpotifyException();
         }
 
         if(expireDate.isBeforeNow()){
@@ -112,6 +101,13 @@ public class SpotifyClient {
         HttpEntity<String> entity = new HttpEntity<String>(null,headers);
 
         template.postForObject(url, entity, Object.class);
+    }
+
+    private void setTokens(AccessResponse response) {
+        accessToken = response.getAccess_token();
+        refreshToken = response.getRefresh_token();
+        tokenType = response.getToken_type();
+        expireDate = DateTime.now().plusSeconds(response.getExpires_in());
     }
 
     private String getEncodedClientInfo() {

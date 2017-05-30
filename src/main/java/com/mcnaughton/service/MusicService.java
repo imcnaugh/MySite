@@ -3,6 +3,8 @@ package com.mcnaughton.service;
 import com.mcnaughton.client.SpotifyClient;
 import com.mcnaughton.client.TwitterClient;
 import com.mcnaughton.client.spotifyModels.response.Playlist;
+import com.mcnaughton.client.twitterModels.NewSongFlag;
+import com.mcnaughton.exceptions.NoNewSongsException;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,10 +23,6 @@ public class MusicService {
     @Value("${spotify.stateString}")
     private String authStateString;
 
-    public void testing() throws TwitterException {
-        boolean isAcceptingNewSongs = twitterClient.acceptingNewSongs();
-    }
-
     public void setAuthCode(
             String authToken,
             String state,
@@ -39,11 +37,12 @@ public class MusicService {
     }
 
     public void addSongToPlaylist(String songUri) throws Exception {
-        boolean acceptingNewSongs = twitterClient.acceptingNewSongs();
-        if(acceptingNewSongs){
+        NewSongFlag acceptingNewSongs = twitterClient.acceptingNewSongs();
+        if(acceptingNewSongs.isAcceptingNewSongs()){
             spotifyClient.addSongToPlaylist(songUri);
+            //TODO add in some kind of notification to myself
         } else {
-            throw new Exception("not takaing any new songs at this time");
+            throw new NoNewSongsException(acceptingNewSongs.getReason());
         }
     }
 }
