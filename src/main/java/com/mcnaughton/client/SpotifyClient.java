@@ -105,7 +105,8 @@ public class SpotifyClient {
 
     private void setTokens(AccessResponse response) {
         accessToken = response.getAccess_token();
-        refreshToken = response.getRefresh_token();
+        if(response.getRefresh_token() != null){
+            refreshToken = response.getRefresh_token();}
         tokenType = response.getToken_type();
         expireDate = DateTime.now().plusSeconds(response.getExpires_in());
     }
