@@ -1,9 +1,10 @@
 package com.mcnaughton.client;
 
-import com.mcnaughton.client.spotifyModels.AccessResponse;
+import com.mcnaughton.client.spotifyModels.response.AccessResponse;
 import com.mcnaughton.client.spotifyModels.SpotifyClientConfig;
 import com.mcnaughton.client.spotifyModels.response.Playlist;
 import com.mcnaughton.exceptions.NotLoggedIntoSpotifyException;
+import com.mcnaughton.util.FileUtil;
 import com.mcnaughton.util.UriUtil;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,6 @@ public class SpotifyClient {
     private static RestTemplate template = new RestTemplate();
 
     private static String accessToken;
-    private static String refreshToken;
     private static String tokenType;
     private static DateTime expireDate;
 
@@ -50,7 +50,7 @@ public class SpotifyClient {
         HttpEntity<String> entity = new HttpEntity<String>(null,headers);
         String url = UriUtil.generateUri(config.getAuthHost(), config.getRequestAccessPath(),
                 "grant_type=refresh_token",
-                "refresh_token=" + refreshToken);
+                "refresh_token=" + getRefreshToken());
         AccessResponse response = template.postForObject(
                 url,
                 entity,
@@ -106,7 +106,7 @@ public class SpotifyClient {
     private void setTokens(AccessResponse response) {
         accessToken = response.getAccess_token();
         if(response.getRefresh_token() != null){
-            refreshToken = response.getRefresh_token();}
+            setRefreshToken(response.getRefresh_token());}
         tokenType = response.getToken_type();
         expireDate = DateTime.now().plusSeconds(response.getExpires_in());
     }
@@ -114,5 +114,13 @@ public class SpotifyClient {
     private String getEncodedClientInfo() {
         String s= config.getClientId() + ":" + config.getClientSecret();
         return Base64.getEncoder().encodeToString(s.getBytes());
+    }
+
+    public String getRefreshToken() {
+        return FileUtil.getFileContents(config.getRefreshFilePath());
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        FileUtil.writeToFile(config.getRefreshFilePath(), refreshToken);
     }
 }

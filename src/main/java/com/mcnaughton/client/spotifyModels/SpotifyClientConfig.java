@@ -34,6 +34,9 @@ public class SpotifyClientConfig {
     @Value("${spotify.playlistId}")
     private String playlistId;
 
+    @Value("${spotify.refreshFilePath}")
+    private String refreshFilePath;
+
     public String getAuthHost() {
         return authHost;
     }
@@ -72,5 +75,9 @@ public class SpotifyClientConfig {
 
     public String getPlaylistId() {
         return playlistId;
+    }
+
+    public String getRefreshFilePath() {
+        return refreshFilePath;
     }
 }

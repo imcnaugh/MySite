@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import twitter4j.*;
 
-import java.util.Arrays;
-
 @Repository
 public class TwitterClient {
 

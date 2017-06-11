@@ -1,4 +1,4 @@
-package com.mcnaughton.client.spotifyModels;
+package com.mcnaughton.client.spotifyModels.response;
 
 public class AccessResponse {
 
