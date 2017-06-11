@@ -59,11 +59,7 @@ public class SpotifyClient {
     }
 
     public Playlist getPlaylistTracks() throws NotLoggedIntoSpotifyException {
-        if(expireDate == null){
-            throw new NotLoggedIntoSpotifyException();
-        }
-
-        if(expireDate.isBeforeNow()){
+        if(expireDate == null || expireDate.isBeforeNow()){
             refreshAccessToken();
         }
         String url = UriUtil.generateUri(
@@ -83,11 +79,7 @@ public class SpotifyClient {
     }
 
     public void addSongToPlaylist(String songUri) throws NotLoggedIntoSpotifyException {
-        if(expireDate == null){
-            throw new NotLoggedIntoSpotifyException();
-        }
-
-        if(expireDate.isBeforeNow()){
+        if(expireDate == null || expireDate.isBeforeNow()){
             refreshAccessToken();
         }
 
