@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.YearMonth;
 import java.util.Set;
 
-public class PreviousJob {
+public class WorkExperience {
 
     private String companyName;
     private String role;

@@ -9,7 +9,7 @@ public class Resume {
     private String Summary;
     private ContactInfo contactInfo;
     private Set<Skill> skills;
-    private Set<PreviousJob> previousWork;
+    private Set<WorkExperience> workExperience;
     private Set<Degree> degrees;
     private Set<Certification> certifications;
 
@@ -45,12 +45,12 @@ public class Resume {
         this.skills = skills;
     }
 
-    public Set<PreviousJob> getPreviousWork() {
-        return previousWork;
+    public Set<WorkExperience> getPreviousWork() {
+        return workExperience;
     }
 
-    public void setPreviousWork(Set<PreviousJob> previousWork) {
-        this.previousWork = previousWork;
+    public void setPreviousWork(Set<WorkExperience> previousWork) {
+        this.workExperience = previousWork;
     }
 
     public Set<Degree> getDegrees() {

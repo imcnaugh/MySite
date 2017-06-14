@@ -54,8 +54,8 @@ public class ResumeService {
         return certs;
     }
 
-    private Set<PreviousJob> getPreviousWork(){
-        Set<PreviousJob> previousWork = new HashSet<>();
+    private Set<WorkExperience> getPreviousWork(){
+        Set<WorkExperience> previousWork = new HashSet<>();
 
         previousWork.add(getSystemInMotionInfo());
         previousWork.add(getSlalomInfo());
@@ -64,8 +64,8 @@ public class ResumeService {
         return previousWork;
     }
 
-    private PreviousJob getSystemInMotionInfo() {
-        PreviousJob job = new PreviousJob();
+    private WorkExperience getSystemInMotionInfo() {
+        WorkExperience job = new WorkExperience();
         job.setCompanyName("Systems in Motion");
         job.setRole("Software Developer");
         job.setCurrentJob(false);
@@ -84,8 +84,8 @@ public class ResumeService {
         return job;
     }
 
-    private PreviousJob getSlalomInfo() {
-        PreviousJob job = new PreviousJob();
+    private WorkExperience getSlalomInfo() {
+        WorkExperience job = new WorkExperience();
         job.setCompanyName("Slalom Consulting");
         job.setRole("Software Developer");
         job.setCurrentJob(false);
@@ -104,8 +104,8 @@ public class ResumeService {
         return job;
     }
 
-    private PreviousJob getExpediaInfo() {
-        PreviousJob job = new PreviousJob();
+    private WorkExperience getExpediaInfo() {
+        WorkExperience job = new WorkExperience();
         job.setCompanyName("Expedia");
         job.setRole("Developer");
         job.setCurrentJob(true);
