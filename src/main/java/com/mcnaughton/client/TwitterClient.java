@@ -17,4 +17,8 @@ public class TwitterClient {
         boolean newSongs = ! latestTweet.split(" ")[0].toUpperCase().equals("FALSE");
         return new NewSongFlag(newSongs, latestTweet);
     }
+
+    public void pingMe(String message) throws TwitterException{
+        twitterClient.directMessages().sendDirectMessage(twitterClient.getId(), message);
+    }
 }

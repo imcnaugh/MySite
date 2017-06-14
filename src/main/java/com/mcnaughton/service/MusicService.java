@@ -12,6 +12,7 @@ import jdk.nashorn.internal.runtime.regexp.joni.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import twitter4j.TwitterException;
 
 import java.util.Optional;
 
@@ -42,7 +43,6 @@ public class MusicService {
 
     public void addSongToPlaylist(String songUri) throws Exception {
         NewSongFlag acceptingNewSongs = twitterClient.acceptingNewSongs();
-
         if(!acceptingNewSongs.isAcceptingNewSongs()){
             throw new NoNewSongsException(acceptingNewSongs.getReason());
         }
@@ -53,5 +53,11 @@ public class MusicService {
         }
 
         spotifyClient.addSongToPlaylist(songUri);
+
+        try{
+            twitterClient.pingMe("Somebody is adding a song!");
+        } catch (TwitterException te){
+            //TODO log error
+        }
     }
 }
