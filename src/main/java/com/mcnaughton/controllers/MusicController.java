@@ -1,10 +1,14 @@
 package com.mcnaughton.controllers;
 
 import com.mcnaughton.client.spotifyModels.response.Playlist;
+import com.mcnaughton.exceptions.AddingDuplicateSongException;
+import com.mcnaughton.exceptions.NoNewSongsException;
 import com.mcnaughton.service.MusicService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.eclipse.jetty.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,9 +37,19 @@ public class MusicController {
 
     @ApiOperation(value = "Adds a new song to the playlist")
     @RequestMapping(method = RequestMethod.POST)
-    public void addSongToPlaylist(
+    public ResponseEntity addSongToPlaylist(
             @ApiParam(value = "the spotify uri of the song", required = true, defaultValue = "spotify:track:6SmPPtaMnfxgz5duA6t9Cu")
             @RequestParam String spotifyUri) throws Exception {
-        musicService.addSongToPlaylist(spotifyUri);
+        try{
+            musicService.addSongToPlaylist(spotifyUri);
+            return ResponseEntity.status(HttpStatus.ACCEPTED_202).body("Song added to playlist, Thanks!");
+        } catch (NoNewSongsException nnse){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN_403).body(nnse.getReason());
+        } catch (AddingDuplicateSongException adse){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST_400).body(
+                    String.format("Song %s (%s) is already in the playlist", adse.getTrack().getId(), adse.getTrack().getName()));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR_500).body("Something fucked up");
+        }
     }
 }
