@@ -8,13 +8,11 @@ import com.mcnaughton.util.FileUtil;
 import com.mcnaughton.util.UriUtil;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.Base64;
 
 @Repository
@@ -58,7 +56,7 @@ public class SpotifyClient {
         setTokens(response);
     }
 
-    public Playlist getPlaylistTracks() throws NotLoggedIntoSpotifyException {
+    public Playlist getPlaylistTracks() {
         if(expireDate == null || expireDate.isBeforeNow()){
             refreshAccessToken();
         }
@@ -78,7 +76,7 @@ public class SpotifyClient {
         return response.getBody();
     }
 
-    public void addSongToPlaylist(String songUri) throws NotLoggedIntoSpotifyException {
+    public int addSongToPlaylist(String songUri) {
         if(expireDate == null || expireDate.isBeforeNow()){
             refreshAccessToken();
         }
@@ -92,7 +90,8 @@ public class SpotifyClient {
         headers.add("Authorization", (tokenType + " " + accessToken));
         HttpEntity<String> entity = new HttpEntity<String>(null,headers);
 
-        template.postForObject(url, entity, Object.class);
+        ResponseEntity response = template.postForEntity(url, entity, String.class);
+        return response.getStatusCodeValue();
     }
 
     private void setTokens(AccessResponse response) {
