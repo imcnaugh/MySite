@@ -2,6 +2,7 @@ package com.mcnaughton.client;
 
 import com.mcnaughton.client.twitterModels.NewSongFlag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import twitter4j.*;
 
@@ -11,6 +12,9 @@ public class TwitterClient {
     @Autowired
     private Twitter twitterClient;
 
+    @Value("${twitter.userId}")
+    private long userId;
+
     public NewSongFlag acceptingNewSongs() throws TwitterException {
         String latestTweet = twitterClient.getUserTimeline("IanSongReqFlag")
                 .get(0).getText();
@@ -19,6 +23,6 @@ public class TwitterClient {
     }
 
     public void pingMe(String message) throws TwitterException{
-        twitterClient.directMessages().sendDirectMessage(twitterClient.getId(), message);
+        twitterClient.sendDirectMessage(userId, message);
     }
 }

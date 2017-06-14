@@ -3,6 +3,7 @@ package com.mcnaughton.controllers;
 import com.mcnaughton.client.spotifyModels.response.Playlist;
 import com.mcnaughton.exceptions.AddingDuplicateSongException;
 import com.mcnaughton.exceptions.NoNewSongsException;
+import com.mcnaughton.exceptions.ValidationException;
 import com.mcnaughton.service.MusicService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -45,9 +46,11 @@ public class MusicController {
             return ResponseEntity.status(HttpStatus.ACCEPTED_202).body("Song added to playlist, Thanks!");
         } catch (NoNewSongsException nnse){
             return ResponseEntity.status(HttpStatus.FORBIDDEN_403).body(nnse.getReason());
-        } catch (AddingDuplicateSongException adse){
+        } catch (AddingDuplicateSongException adse) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST_400).body(
                     String.format("Song %s (%s) is already in the playlist", adse.getTrack().getId(), adse.getTrack().getName()));
+        } catch (ValidationException ve){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST_400).body("spotifyURI is not in the correct format");
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR_500).body("Something fucked up");
         }

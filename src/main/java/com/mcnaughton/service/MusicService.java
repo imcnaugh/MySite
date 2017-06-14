@@ -8,6 +8,7 @@ import com.mcnaughton.client.spotifyModels.response.Track;
 import com.mcnaughton.client.twitterModels.NewSongFlag;
 import com.mcnaughton.exceptions.AddingDuplicateSongException;
 import com.mcnaughton.exceptions.NoNewSongsException;
+import com.mcnaughton.exceptions.ValidationException;
 import jdk.nashorn.internal.runtime.regexp.joni.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import twitter4j.TwitterException;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 public class MusicService {
@@ -42,12 +44,18 @@ public class MusicService {
     }
 
     public void addSongToPlaylist(String songUri) throws Exception {
+        Pattern songUriPattern = Pattern.compile("spotify:track:.{22}");
+
+        if(!songUriPattern.matcher(songUri).matches()){
+            throw new ValidationException();
+        }
+
         NewSongFlag acceptingNewSongs = twitterClient.acceptingNewSongs();
         if(!acceptingNewSongs.isAcceptingNewSongs()){
             throw new NoNewSongsException(acceptingNewSongs.getReason());
         }
 
-        Optional<Track> track = getPlaylist().getItems().stream().map(Item::getTrack).filter(t -> t.getId().equals(songUri)).findFirst();
+        Optional<Track> track = getPlaylist().getItems().stream().map(Item::getTrack).filter(t -> t.getId().equals(songUri.substring(14))).findFirst();
         if(track.isPresent()){
             throw new AddingDuplicateSongException(track.get());
         }
