@@ -108,11 +108,12 @@ public class ResumeService {
         WorkExperience job = new WorkExperience();
         job.setCompanyName("Expedia");
         job.setRole("Developer");
-        job.setCurrentJob(true);
+        job.setCurrentJob(false);
         Set<String> jobLoc = new HashSet<>();
         jobLoc.add("San Francisco, CA");
         job.setLocations(jobLoc);
         job.setStartDate(YearMonth.of(2015, 9));
+        job.setEndDate(YearMonth.of(2017, 6));
         Set<String> highlights = new HashSet<>();
         highlights.add("Tasked with and succeeded at designing/implementing from scratch, a job to read, transform," +
                 " and serve data for better sorting of activities.");
