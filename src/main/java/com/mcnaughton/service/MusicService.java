@@ -8,6 +8,7 @@ import com.mcnaughton.client.spotifyModels.response.Track;
 import com.mcnaughton.client.twitterModels.NewSongFlag;
 import com.mcnaughton.exceptions.AddingDuplicateSongException;
 import com.mcnaughton.exceptions.NoNewSongsException;
+import com.mcnaughton.exceptions.SpotifyException;
 import com.mcnaughton.exceptions.ValidationException;
 import jdk.nashorn.internal.runtime.regexp.joni.Option;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class MusicService {
         }
     }
 
-    public Playlist getPlaylist() throws Exception {
+    public Playlist getPlaylist(){
         return spotifyClient.getPlaylistTracks();
     }
 
@@ -60,7 +61,11 @@ public class MusicService {
             throw new AddingDuplicateSongException(track.get());
         }
 
-        spotifyClient.addSongToPlaylist(songUri);
+        int responseCode = spotifyClient.addSongToPlaylist(songUri);
+
+        if(responseCode != 201){
+            throw new SpotifyException(responseCode);
+        }
 
         try{
             twitterClient.pingMe("Somebody is adding a song!");
