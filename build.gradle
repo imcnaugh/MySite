@@ -42,4 +42,5 @@ war {
 
 springBoot{
     backupSource=false
+    executable = true
 }
