@@ -107,11 +107,11 @@ public class SpotifyClient {
         return Base64.getEncoder().encodeToString(s.getBytes());
     }
 
-    public String getRefreshToken() {
+    private String getRefreshToken() {
         return FileUtil.getFileContents(config.getRefreshFilePath());
     }
 
-    public void setRefreshToken(String refreshToken) {
+    private void setRefreshToken(String refreshToken) {
         FileUtil.writeToFile(config.getRefreshFilePath(), refreshToken);
     }
 }

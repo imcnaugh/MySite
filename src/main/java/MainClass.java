@@ -57,10 +57,17 @@ public class MainClass extends SpringBootServletInitializer {
 
     @Bean
     public Docket swaggerSettings() {
-        ApiInfo apiInfo = new ApiInfo("Ian McNaughton", "Why make a templated website attempting to showcase " +
+        ApiInfo apiInfo = new ApiInfo(
+                "Ian McNaughton",
+                "Why make a templated website attempting to showcase " +
                 "my skills, when I can just showcase my skills. Welcome, what you are looking at is a swagger documentation " +
                 "of my api. Here you can get the normal array of information about myself all without the hassle of pretty " +
-                "pictures or user interfaces!", "1.0", "", "", "", "");
+                "pictures or user interfaces!",
+                "1.0",
+                "",
+                "",
+                "",
+                "");
 
 
         return new Docket(DocumentationType.SWAGGER_2)

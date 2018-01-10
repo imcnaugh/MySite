@@ -83,4 +83,3 @@ gradle-app.setting
 
 src/main/resources/*
 .idea/*
-src/test/*
