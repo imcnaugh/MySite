@@ -3,6 +3,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,6 +14,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import sun.applet.Main;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
@@ -21,7 +24,7 @@ import java.util.Arrays;
 @SpringBootApplication
 @EnableSwagger2
 @ComponentScan("com.mcnaughton")
-public class MainClass {
+public class MainClass extends SpringBootServletInitializer {
 
     @Value("${twitter.consumerKey}")
     private String consumerKey;
@@ -32,8 +35,13 @@ public class MainClass {
     @Value("${twitter.applicationSec}")
     private String applicationSec;
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         SpringApplication.run(MainClass.class, args);
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Main.class);
     }
 
     @Bean

@@ -60,6 +60,7 @@ public class ResumeService {
         previousWork.add(getSystemInMotionInfo());
         previousWork.add(getSlalomInfo());
         previousWork.add(getExpediaInfo());
+        previousWork.add(getUptakeInfo());
 
         return previousWork;
     }
@@ -127,10 +128,25 @@ public class ResumeService {
         return job;
     }
 
+    private WorkExperience getUptakeInfo() {
+        WorkExperience job = new WorkExperience();
+        job.setCompanyName("Uptake");
+        job.setRole("Software Developer");
+        job.setCurrentJob(true);
+        Set<String> jobLoc = new HashSet<>();
+        jobLoc.add("Chicago, IL");
+        job.setLocations(jobLoc);
+        job.setStartDate(YearMonth.of(2017, 8));
+        Set<String> highlights = new HashSet<>();
+        //TODO come up with highlights for this job, ugh how do i market this...
+        job.setHighlights(highlights);
+        return job;
+    }
+
     private ContactInfo getContactInfo() {
         ContactInfo contactInfo = new ContactInfo();
-        contactInfo.setAddressLine1("1425 Fillmore St, Apt: 509");
-        contactInfo.setAddressLine2("San Francisco, CA 94115");
+        contactInfo.setAddressLine1("1100 N. Dearborn, Apt: 1509");
+        contactInfo.setAddressLine2("Chicago, IL 60610");
         contactInfo.setEmailAddress("IanMcNaugh@gmail.com");
         contactInfo.setPhoneNumber("1 (248) 494-3748");
         return contactInfo;
