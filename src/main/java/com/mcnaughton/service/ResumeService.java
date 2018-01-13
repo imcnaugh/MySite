@@ -18,7 +18,7 @@ public class ResumeService {
         myResume.setSummary(getSummary());
         myResume.setContactInfo(getContactInfo());
         myResume.setSkills(getSkills());
-        myResume.setPreviousWork(getPreviousWork());
+        myResume.setWorkExperience(getWorkExperience());
         myResume.setDegrees(getDegrees());
         myResume.setCertifications(getCertifications());
 
@@ -54,15 +54,15 @@ public class ResumeService {
         return certs;
     }
 
-    private Set<WorkExperience> getPreviousWork(){
-        Set<WorkExperience> previousWork = new HashSet<>();
+    private Set<WorkExperience> getWorkExperience(){
+        Set<WorkExperience> workExperience = new HashSet<>();
 
-        previousWork.add(getSystemInMotionInfo());
-        previousWork.add(getSlalomInfo());
-        previousWork.add(getExpediaInfo());
-        previousWork.add(getUptakeInfo());
+        workExperience.add(getSystemInMotionInfo());
+        workExperience.add(getSlalomInfo());
+        workExperience.add(getExpediaInfo());
+        workExperience.add(getUptakeInfo());
 
-        return previousWork;
+        return workExperience;
     }
 
     private WorkExperience getSystemInMotionInfo() {

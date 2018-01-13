@@ -45,12 +45,12 @@ public class Resume {
         this.skills = skills;
     }
 
-    public Set<WorkExperience> getPreviousWork() {
+    public Set<WorkExperience> getWorkExperience() {
         return workExperience;
     }
 
-    public void setPreviousWork(Set<WorkExperience> previousWork) {
-        this.workExperience = previousWork;
+    public void setWorkExperience(Set<WorkExperience> workExperience) {
+        this.workExperience = workExperience;
     }
 
     public Set<Degree> getDegrees() {
