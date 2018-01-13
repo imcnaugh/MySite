@@ -10,7 +10,6 @@ import com.mcnaughton.exceptions.AddingDuplicateSongException;
 import com.mcnaughton.exceptions.NoNewSongsException;
 import com.mcnaughton.exceptions.SpotifyException;
 import com.mcnaughton.exceptions.ValidationException;
-import jdk.nashorn.internal.runtime.regexp.joni.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

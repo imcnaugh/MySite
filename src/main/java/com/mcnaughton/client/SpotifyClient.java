@@ -3,7 +3,6 @@ package com.mcnaughton.client;
 import com.mcnaughton.client.spotifyModels.response.AccessResponse;
 import com.mcnaughton.client.spotifyModels.SpotifyClientConfig;
 import com.mcnaughton.client.spotifyModels.response.Playlist;
-import com.mcnaughton.exceptions.NotLoggedIntoSpotifyException;
 import com.mcnaughton.util.FileUtil;
 import com.mcnaughton.util.UriUtil;
 import org.joda.time.DateTime;
@@ -12,7 +11,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.util.Base64;
 
 @Repository

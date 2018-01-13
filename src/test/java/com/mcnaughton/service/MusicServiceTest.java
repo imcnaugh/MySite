@@ -89,11 +89,6 @@ public class MusicServiceTest {
         Mockito.verify(mockSpotifyClient, times(1)).addSongToPlaylist(validSongUri);
     }
 
-//    @Test
-//    public void assertFalse() {
-//        assert(false);
-//    }
-
     //TODO add a test case for when twitter direct message fails
 
     private Playlist getEmptyPlaylist() {
