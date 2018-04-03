@@ -20,7 +20,13 @@ public enum Skill {
     GIT_SVN("Git/SVN"),
     HTML("HTML"),
     PERL("Perl"),
-    ANT_IVY("Ant/Ivy");
+    ANT_IVY("Ant/Ivy"),
+    AKKA("Akka"),
+    KAFKA("Kafka"),
+    PYTHON("Python"),
+    MONGO_DB("Mongo"),
+    ELASTIC_SEARCH("Elastic search"),
+    CASSANDRA("Apache Cassandra");
 
     private final String formattedName;
 
