@@ -26,7 +26,8 @@ public enum Skill {
     PYTHON("Python"),
     MONGO_DB("Mongo"),
     ELASTIC_SEARCH("Elastic search"),
-    CASSANDRA("Apache Cassandra");
+    CASSANDRA("Apache Cassandra"),
+    SBT("Sbt");
 
     private final String formattedName;
 
