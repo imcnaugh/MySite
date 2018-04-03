@@ -161,19 +161,20 @@ public class ResumeService {
         skills.add(Skill.SQL);
         skills.add(Skill.JAVA);
         skills.add(Skill.REST_SOAP);
-        skills.add(Skill.JSP_JSTL);
-        skills.add(Skill.JDBC);
+        skills.add(Skill.PYTHON);
+        skills.add(Skill.MONGO_DB);
         skills.add(Skill.C_SHARP);
         skills.add(Skill.JENKINS);
         skills.add(Skill.REGEX);
         skills.add(Skill.MOCKITO);
         skills.add(Skill.GRADLE);
-        skills.add(Skill.C_PLUS_PLUS);
-        skills.add(Skill.TOMCAT);
+        skills.add(Skill.AKKA);
+        skills.add(Skill.KAFKA);
         skills.add(Skill.GIT_SVN);
-        skills.add(Skill.HTML);
+        skills.add(Skill.ELASTIC_SEARCH);
+        skills.add(Skill.CASSANDRA);
         skills.add(Skill.PERL);
-        skills.add(Skill.ANT_IVY);
+        skills.add(Skill.SBT);
         return skills;
     }
 }
