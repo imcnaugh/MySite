@@ -15,15 +15,15 @@ public class Links {
         return bestPizzaEver;
     }
 
-    public String personalBitbucket() {
+    public String getPersonalBitbucket() {
         return personalBitbucket;
     }
 
-    public String personalJenkins() {
+    public String getPersonalJenkins() {
         return personalJenkins;
     }
 
-    public String personalJira() {
+    public String getPersonalJira() {
         return personalJira;
     }
 }
