@@ -27,7 +27,10 @@ public enum Skill {
     MONGO_DB("Mongo"),
     ELASTIC_SEARCH("Elastic search"),
     CASSANDRA("Apache Cassandra"),
-    SBT("Sbt");
+    SBT("Sbt"),
+    DOCKER("Docker"),
+    MESOS("mesos"),
+    KUBERNETES("kubernetes");
 
     private final String formattedName;
 

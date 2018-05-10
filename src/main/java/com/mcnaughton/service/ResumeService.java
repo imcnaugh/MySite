@@ -169,6 +169,8 @@ public class ResumeService {
         skills.add(Skill.SCALA);
         skills.add(Skill.SPRING);
         skills.add(Skill.MAVEN);
+        skills.add(Skill.DOCKER);
+        skills.add(Skill.MESOS);
         skills.add(Skill.HIBERNATE);
         skills.add(Skill.SQL);
         skills.add(Skill.JAVA);
