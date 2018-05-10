@@ -1,7 +1,10 @@
 package com.mcnaughton.service;
 
+import com.mcnaughton.client.TwitterClient;
 import com.mcnaughton.models.resume.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import twitter4j.TwitterException;
 
 import java.time.Year;
 import java.time.YearMonth;
@@ -11,7 +14,16 @@ import java.util.Set;
 @Service
 public class ResumeService {
 
+    @Autowired
+    private TwitterClient twitterClient;
+
     public Resume getMyResume(){
+        try {
+            twitterClient.pingMe("Somebody is looking at your resume!");
+        } catch (TwitterException e) {
+            //TODO log error
+        }
+
         Resume myResume = new Resume();
 
         myResume.setName("Ian Louis McNaughton");
